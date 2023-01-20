@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 
 DATA = {
@@ -18,6 +19,12 @@ DATA = {
     },
     # можете добавить свои рецепты ;)
 }
+RU_DATA = {'omlet': 'Омлет', 'pasta': 'Паста', 'buter':'Бутерброд' }
+
+def recipe(request, rec):
+    person = request.GET.get('servings', 1)
+    context = {'recip' : {k:round(v * int(person), 2) for k,v in DATA[rec].items() }, 'name' : RU_DATA.get(rec).lower(), 'servings' : person}
+    return render(request, 'calculator/index.html', context)
 
 # Напишите ваш обработчик. Используйте DATA как источник данных
 # Результат - render(request, 'calculator/index.html', context)
