@@ -23,7 +23,7 @@ RU_DATA = {'omlet': 'Омлет', 'pasta': 'Паста', 'buter':'Бутербр
 
 def recipe(request, rec):
     person = request.GET.get('servings', 1)
-    context = {'recip' : {k:round(v * int(person), 2) for k,v in DATA[rec].items() }, 'name' : RU_DATA.get(rec).lower(), 'servings' : person}
+    context = {'recip' : {k:round(v * int(person), 2) for k,v in DATA.get(rec,{}).items() }, 'name' : RU_DATA.get(rec,'').lower(), 'servings' : person}
     return render(request, 'calculator/index.html', context)
 
 # Напишите ваш обработчик. Используйте DATA как источник данных

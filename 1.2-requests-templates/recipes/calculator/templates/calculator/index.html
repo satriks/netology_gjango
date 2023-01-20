@@ -5,7 +5,9 @@
     <title>Рецепты</title>
 </head>
 <body>
+{% if name and servings %}
 <h3>Рецепт {{name}}  на {{servings}} человек :</h3>
+{% endif %}
 {% for ingredient, amount in recip.items %}
     <p>{{ ingredient }}: {{ amount }}</p>
 {% empty %}
