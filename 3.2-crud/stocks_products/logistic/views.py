@@ -14,7 +14,7 @@ class ProductViewSet(ModelViewSet):
     # при необходимости добавьте параметры фильтрации
     search_fields = ['title', 'description']
     ordering_fields = ['id', 'title', 'description']
-    pagination_class = LimitOffsetPagination
+    # pagination_class = LimitOffsetPagination
 
 class StockViewSet(ModelViewSet):
     queryset = Stock.objects.all()
@@ -23,4 +23,4 @@ class StockViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields  = ['products']
     search_fields = ['products__title', 'products__description']
-    pagination_class = LimitOffsetPagination
+    # pagination_class = LimitOffsetPagination
