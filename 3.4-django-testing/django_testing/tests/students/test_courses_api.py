@@ -126,3 +126,4 @@ def test_max_student_per_course(api_client, factory_student, factory_course, max
         data = {'name': course.name, 'students': [student.id]}
         response = api_client.post(url, data=data)
         assert response.status_code == expected_status
+
