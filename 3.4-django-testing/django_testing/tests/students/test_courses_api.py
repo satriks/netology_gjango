@@ -2,7 +2,7 @@ from random import choice
 
 import pytest
 from django.urls import reverse
-from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
 
 
 @pytest.mark.django_db
@@ -110,3 +110,19 @@ def test_delete_course(api_client, factory_course):
 
     assert response.status_code == HTTP_204_NO_CONTENT
     assert response.content_type is None
+
+
+@pytest.mark.parametrize(["max_value", "expected_status"], ((0, HTTP_400_BAD_REQUEST), (5, HTTP_201_CREATED)))
+@pytest.mark.django_db
+def test_max_student_per_course(api_client, factory_student, factory_course, max_value, expected_status, settings):
+    '''  Проверка количества студентов на курсе  '''
+
+    settings.MAX_STUDENTS_PER_COURSE = max_value
+    course = factory_course()
+    students = factory_student(_quantity=3)
+    url = reverse('courses-list')
+
+    for student in students:
+        data = {'name': course.name, 'students': [student.id]}
+        response = api_client.post(url, data=data)
+        assert response.status_code == expected_status

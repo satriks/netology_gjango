@@ -21,3 +21,7 @@ def factory_student():
     def student(*args, **kwargs):
         return  baker.make(Student, *args, **kwargs)
     return student
+
+@pytest.fixture
+def change_max_students(settings):
+    settings.MAX_STUDENTS_PER_COURSE = True
